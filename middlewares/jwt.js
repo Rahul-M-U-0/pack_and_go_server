@@ -28,8 +28,8 @@ function authJwt() {
   });
 }
 
-async function isRevoked(req, payload) {
-  const authHeader = req.headers("Authorization");
+async function isRevoked(req, jwt) {
+  const authHeader = req.header("Authorization");
 
   if (!authHeader.startsWith("Bearer ")) {
     return true;
@@ -38,12 +38,13 @@ async function isRevoked(req, payload) {
   const accessToken = authHeader.replace("Bearer ", "");
 
   const token = await Token.findOne({
-    token: accessToken,
+    accessToken,
   });
 
   const adminRouteRegex = /^\/api\/v1\/admin\//i;
 
-  const adminFault = !payload.isAdmin && adminRouteRegex.test(req.originalUrl);
+  const adminFault =
+    !jwt.payload.isAdmin && adminRouteRegex.test(req.originalUrl);
 
   return adminFault || !token;
 }

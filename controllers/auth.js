@@ -54,18 +54,18 @@ exports.login = async function (req, res) {
         .json({ message: "Email not found\nCheck your email and try again." });
     }
 
-    if (!bcrypt.compareSync(password, use.passwordHash)) {
+    if (!bcrypt.compareSync(password, user.passwordHash)) {
       return res.status(400).json({ message: "Incorrect password!" });
     }
 
     const accessToken = jwt.sign(
-      { id: use.id, isAdmin: user.isAdmin },
+      { id: user.id, isAdmin: user.isAdmin },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "24h" }
     );
 
     const refreshToken = jwt.sign(
-      { id: use.id, isAdmin: user.isAdmin },
+      { id: user.id, isAdmin: user.isAdmin },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "60d" }
     );
@@ -90,7 +90,7 @@ exports.login = async function (req, res) {
 
 exports.verifyToken = async function (req, res) {
   try {
-    const accessToken = req.headers("Authorization");
+    const accessToken = req.headers["Authorization"];
 
     if (!accessToken) return res.json(false);
 

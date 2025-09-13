@@ -10,7 +10,7 @@ async function errorHandler(error, req, res, next) {
     }
 
     try {
-      const tokenHeader = req.headers("Authorization");
+      const tokenHeader = req.headers["Authorization"];
       const accessToken = tokenHeader?.split(" ")[1];
       const token = await Token.findOne({
         accessToken,
