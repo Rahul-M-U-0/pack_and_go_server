@@ -23,9 +23,13 @@ app.use(errorHandler);
 
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
+const categoriesRouter = require("./routes/category");
+const tripsRouter = require("./routes/trip");
 
 app.use(`${API}/`, authRouter);
 app.use(`${API}/users`, usersRouter);
+app.use(`${API}/categories`, categoriesRouter);
+app.use(`${API}/trips`, tripsRouter);
 
 // start server
 const hostname = env.HOST;

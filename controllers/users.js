@@ -1,5 +1,6 @@
 const { User } = require("../models/user");
 
+// Get all users
 exports.getUsers = async (_, res) => {
   try {
     const users = await User.find().select("name email id isAdmin");
@@ -13,6 +14,7 @@ exports.getUsers = async (_, res) => {
   }
 };
 
+// Get user by ID
 exports.getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select(
@@ -28,6 +30,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+// Update user by ID
 exports.updateUser = async (req, res) => {
   try {
     const { name, email, phone } = req.body;

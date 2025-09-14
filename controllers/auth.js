@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { Token } = require("../models/token");
 const { sendmail } = require("../helpers/email_sender");
 
+// Register a new user
 exports.register = async function (req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -43,6 +44,7 @@ exports.register = async function (req, res) {
   }
 };
 
+// Login a user
 exports.login = async function (req, res) {
   try {
     const { email, password } = req.body;
@@ -88,6 +90,7 @@ exports.login = async function (req, res) {
   }
 };
 
+// Verify JWT token
 exports.verifyToken = async function (req, res) {
   try {
     const accessToken = req.headers["Authorization"];
@@ -115,6 +118,7 @@ exports.verifyToken = async function (req, res) {
   }
 };
 
+// Initiate password reset
 exports.forgotPassword = async function (req, res) {
   try {
     const { email } = req.body;
@@ -149,6 +153,7 @@ exports.forgotPassword = async function (req, res) {
   }
 };
 
+// Verify OTP for password reset
 exports.verifyPasswordResetOtp = async function (req, res) {
   try {
     const { email, otp } = req.body;
@@ -181,6 +186,7 @@ exports.verifyPasswordResetOtp = async function (req, res) {
   }
 };
 
+// Reset password
 exports.resetPassword = async function (req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
